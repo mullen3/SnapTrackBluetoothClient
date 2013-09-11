@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableData         *data;
 @property (strong,nonatomic)  NSString              *employeeName;
 @property (strong,nonatomic)  NSDate                *startTime;
+@property (nonatomic) BOOL                   isCheckedIn;
 
 @end
 
@@ -29,12 +30,14 @@
 {
     [super viewDidLoad];
 	// Start up the CBCentralManager
+    self.view.backgroundColor = [UIColor yellowColor];
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:@"Dee dee doo doo." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
     */
     // And somewhere to store the incoming data
+    self.isCheckedIn = NO;
     _data = [[NSMutableData alloc] init];
 }
 
@@ -185,27 +188,28 @@
     
     // Log it
     NSLog(@"Received: %@", stringFromData);
-    
+    self.isCheckedIn = YES;
     _employeeName = stringFromData;
     
     NSString *alertString = [NSString stringWithFormat:@" %@ checked in",_employeeName];
     _startTime = [[NSDate alloc] init];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check In" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
     
 }
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
     NSLog(@"peripheral disconnected");
+    if(self.isCheckedIn){
+        self.isCheckedIn = NO;
+        NSDate *endTime = [[NSDate alloc] init];
     
-    NSDate *endTime = [[NSDate alloc] init];
+        NSTimeInterval timeWorked = [endTime timeIntervalSinceDate:_startTime];
     
-    NSTimeInterval timeWorked = [endTime timeIntervalSinceDate:_startTime];
-    
-    NSString *alertString = [NSString stringWithFormat:@" %@ checked out after %f seconds",_employeeName,timeWorked];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    
+        NSString *alertString = [NSString stringWithFormat:@" %@ checked out after %f seconds",_employeeName,timeWorked];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check Out" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
     [self scan];
 }
 
