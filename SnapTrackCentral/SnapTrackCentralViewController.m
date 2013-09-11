@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSMutableData         *data;
 @property (strong,nonatomic)  EmployeeCollection    *employeeCollection;
 @property (strong,nonatomic)  NSDate                *startTime;
-@property (weak, nonatomic) UIViewController        *popoverContent;
+@property (nonatomic) BOOL                          isCheckedIn;
 
 @end
 
@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
 	// Start up the CBCentralManager
+    self.view.backgroundColor = [UIColor yellowColor];
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:@"Dee dee doo doo." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -40,6 +41,7 @@
     */
     // And somewhere to store the incoming data
     self.employeeCollection = [[EmployeeCollection alloc]init];
+    self.isCheckedIn = NO;
     _data = [[NSMutableData alloc] init];
     self.employeeTableView.dataSource = self.employeeCollection;
 }
@@ -190,14 +192,14 @@
     
     // Log it
     NSLog(@"Received: %@", stringFromData);
-    
+
+    self.isCheckedIn = YES;
     Employee *employee = [[Employee alloc] init];
     employee.name = stringFromData;
     [employee checkIn];
     
     [self.employeeCollection addEmployee:employee];
-    [self.employeeTableView reloadData];
-    
+    [self.employeeTableView reloadData];    
 
     _startTime = [[NSDate alloc] init];
     [self showModalWithFormat:@"Hi %@"];
@@ -207,17 +209,18 @@
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
     NSLog(@"peripheral disconnected");
-    [[self.employeeCollection.employees objectAtIndex:0] checkOut];
-    [self showModalWithFormat:@"Bye %@"];
-    
-    NSDate *endTime = [[NSDate alloc] init];
-    
-    NSTimeInterval timeWorked = [endTime timeIntervalSinceDate:_startTime];
+      
     
     //NSString *alertString = [NSString stringWithFormat:@" %@ checked out after %f seconds",_employeeNames[0],timeWorked];
     //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     //[alert show];
-    
+    if(self.isCheckedIn){
+        self.isCheckedIn = NO;
+        [[self.employeeCollection.employees objectAtIndex:0] checkOut];
+        [self showModalWithFormat:@"Bye %@"];
+        
+        NSDate *endTime = [[NSDate alloc] init];
+    }
     [self scan];
 }
 
