@@ -8,18 +8,22 @@
 
 #import "SnapTrackCentralViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "ModalViewController.h"
+#import "EmployeeCollection.h"
 
 #define CHARACTERISTIC_NAME_UUID_STRING @"C54C3B19-64AC-423A-8282-09BA48CDB28C"
 #define SNAPTRACK_SERVICE_UUID_STRING @"7D12"
 
-@interface SnapTrackCentralViewController () <CBCentralManagerDelegate,CBPeripheralDelegate>
+
+@interface SnapTrackCentralViewController () <CBCentralManagerDelegate,CBPeripheralDelegate, UITableViewDelegate, ModalViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView   *textview;
 @property (strong, nonatomic) CBCentralManager      *centralManager;
 @property (strong, nonatomic) CBPeripheral          *discoveredPeripheral;
 @property (strong, nonatomic) NSMutableData         *data;
-@property (strong,nonatomic)  NSString              *employeeName;
+@property (strong,nonatomic)  EmployeeCollection    *employeeCollection;
 @property (strong,nonatomic)  NSDate                *startTime;
+@property (weak, nonatomic) UIViewController        *popoverContent;
 
 @end
 
@@ -35,7 +39,9 @@
     [alert show];
     */
     // And somewhere to store the incoming data
+    self.employeeCollection = [[EmployeeCollection alloc]init];
     _data = [[NSMutableData alloc] init];
+    self.employeeTableView.dataSource = self.employeeCollection;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +54,6 @@
 {
     [self.centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SNAPTRACK_SERVICE_UUID_STRING]]
                                                 options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
-    
     NSLog(@"Scanning started");
 }
 
@@ -186,29 +191,59 @@
     // Log it
     NSLog(@"Received: %@", stringFromData);
     
-    _employeeName = stringFromData;
+    Employee *employee = [[Employee alloc] init];
+    employee.name = stringFromData;
+    [employee checkIn];
     
-    NSString *alertString = [NSString stringWithFormat:@" %@ checked in",_employeeName];
+    [self.employeeCollection addEmployee:employee];
+    [self.employeeTableView reloadData];
+    
+
     _startTime = [[NSDate alloc] init];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    
+    [self showModalWithFormat:@"Hi %@"];
+    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    //[alert show];
 }
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
     NSLog(@"peripheral disconnected");
+    [[self.employeeCollection.employees objectAtIndex:0] checkOut];
+    [self showModalWithFormat:@"Bye %@"];
     
     NSDate *endTime = [[NSDate alloc] init];
     
     NSTimeInterval timeWorked = [endTime timeIntervalSinceDate:_startTime];
     
-    NSString *alertString = [NSString stringWithFormat:@" %@ checked out after %f seconds",_employeeName,timeWorked];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+    //NSString *alertString = [NSString stringWithFormat:@" %@ checked out after %f seconds",_employeeNames[0],timeWorked];
+    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    //[alert show];
     
     [self scan];
 }
 
+- (void)showModalWithFormat:(NSString *)formatString {
+    ModalViewController *modalViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"checkInModal"];
+    [modalViewController setDelegate:self];
+    
+    // check whether the viewController is already being presented dismiss if so
+    if ([modalViewController isEqual:self.presentedViewController]) {
+        [self dismissViewControllerAnimated:NO completion:NULL];
+    }
+       //[self presentModalViewController:modalViewController animated:NO];
+    [self presentViewController:modalViewController animated:NO completion:NULL];
+    NSString *labelText = [NSString stringWithFormat:formatString, [[self.employeeCollection.employees objectAtIndex:0] name]];
+    modalViewController.label.text = labelText;
+    modalViewController.view.superview.bounds = CGRectMake(0, 0, 320, 320);
+}
+
+- (void)hideModal {
+    UIViewController *modalViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"checkInModal"];
+    // only dismiss if modalViewController is currently being presented
+    if (![modalViewController isEqual:self.presentedViewController]) {
+        [self dismissViewControllerAnimated:NO completion:NULL];
+    }
+}
+         
 - (void)cleanup
 {
     // Don't do anything if we're not connected
@@ -239,5 +274,11 @@
     [self.centralManager cancelPeripheralConnection:self.discoveredPeripheral];
 }
 
+#pragma mark
+// all of the tableview stuff down here
 
+
+
+- (IBAction)tappedOnView:(id)sender {
+}
 @end

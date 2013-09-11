@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SnapTrackCentralViewController : UIViewController
+@interface SnapTrackCentralViewController : UIViewController 
+
+@property (weak, nonatomic) IBOutlet UITableView *employeeTableView;
+- (IBAction)tappedOnView:(id)sender;
+
 
 @end
