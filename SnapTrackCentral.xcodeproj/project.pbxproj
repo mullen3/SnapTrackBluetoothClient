@@ -24,6 +24,12 @@
 		A1B913F917CFF85B0008BB43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B913D117CFF85A0008BB43 /* Foundation.framework */; };
 		A1B9140117CFF85B0008BB43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1B913FF17CFF85B0008BB43 /* InfoPlist.strings */; };
 		A1B9140417CFF85B0008BB43 /* SnapTrackCentralTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B9140317CFF85B0008BB43 /* SnapTrackCentralTests.m */; };
+		B1A103B917E263150029A6CB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A103B817E263150029A6CB /* AudioToolbox.framework */; };
+		B1F1648D17DE4A610013EEBF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F1648C17DE4A610013EEBF /* CoreBluetooth.framework */; };
+		B1F1649517DF8ACE0013EEBF /* useravatar.png in Resources */ = {isa = PBXBuildFile; fileRef = B1F1649417DF8ACE0013EEBF /* useravatar.png */; };
+		B1F1649D17E0D1780013EEBF /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F1649C17E0D1780013EEBF /* Employee.m */; };
+		B1F164A017E0D9660013EEBF /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F1649F17E0D9660013EEBF /* ModalViewController.m */; };
+		B1F164A317E0EE2B0013EEBF /* EmployeeCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = B1F164A217E0EE2B0013EEBF /* EmployeeCollection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +66,15 @@
 		A1B9140017CFF85B0008BB43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A1B9140217CFF85B0008BB43 /* SnapTrackCentralTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SnapTrackCentralTests.h; sourceTree = "<group>"; };
 		A1B9140317CFF85B0008BB43 /* SnapTrackCentralTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SnapTrackCentralTests.m; sourceTree = "<group>"; };
+		B1A103B817E263150029A6CB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B1F1648C17DE4A610013EEBF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		B1F1649417DF8ACE0013EEBF /* useravatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = useravatar.png; sourceTree = "<group>"; };
+		B1F1649B17E0D1780013EEBF /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
+		B1F1649C17E0D1780013EEBF /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
+		B1F1649E17E0D9660013EEBF /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
+		B1F1649F17E0D9660013EEBF /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewController.m; sourceTree = "<group>"; };
+		B1F164A117E0EE2B0013EEBF /* EmployeeCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeCollection.h; sourceTree = "<group>"; };
+		B1F164A217E0EE2B0013EEBF /* EmployeeCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeCollection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1A103B917E263150029A6CB /* AudioToolbox.framework in Frameworks */,
+				B1F1648D17DE4A610013EEBF /* CoreBluetooth.framework in Frameworks */,
 				A1B913D017CFF85A0008BB43 /* UIKit.framework in Frameworks */,
 				A1B913D217CFF85A0008BB43 /* Foundation.framework in Frameworks */,
 				A1B913D417CFF85A0008BB43 /* CoreGraphics.framework in Frameworks */,
@@ -89,6 +106,8 @@
 		A1B913C317CFF85A0008BB43 = {
 			isa = PBXGroup;
 			children = (
+				B1A103B817E263150029A6CB /* AudioToolbox.framework */,
+				B1F1648C17DE4A610013EEBF /* CoreBluetooth.framework */,
 				A1B913D517CFF85A0008BB43 /* SnapTrackCentral */,
 				A1B913FC17CFF85B0008BB43 /* SnapTrackCentralTests */,
 				A1B913CE17CFF85A0008BB43 /* Frameworks */,
@@ -125,6 +144,12 @@
 				A1B913EA17CFF85B0008BB43 /* MainStoryboard_iPad.storyboard */,
 				A1B913ED17CFF85B0008BB43 /* SnapTrackCentralViewController.h */,
 				A1B913EE17CFF85B0008BB43 /* SnapTrackCentralViewController.m */,
+				B1F1649B17E0D1780013EEBF /* Employee.h */,
+				B1F1649C17E0D1780013EEBF /* Employee.m */,
+				B1F1649E17E0D9660013EEBF /* ModalViewController.h */,
+				B1F1649F17E0D9660013EEBF /* ModalViewController.m */,
+				B1F164A117E0EE2B0013EEBF /* EmployeeCollection.h */,
+				B1F164A217E0EE2B0013EEBF /* EmployeeCollection.m */,
 				A1B913D617CFF85B0008BB43 /* Supporting Files */,
 			);
 			path = SnapTrackCentral;
@@ -133,6 +158,7 @@
 		A1B913D617CFF85B0008BB43 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B1F1649417DF8ACE0013EEBF /* useravatar.png */,
 				A1B913D717CFF85B0008BB43 /* SnapTrackCentral-Info.plist */,
 				A1B913D817CFF85B0008BB43 /* InfoPlist.strings */,
 				A1B913DB17CFF85B0008BB43 /* main.m */,
@@ -241,6 +267,7 @@
 				A1B913E617CFF85B0008BB43 /* Default-568h@2x.png in Resources */,
 				A1B913E917CFF85B0008BB43 /* MainStoryboard_iPhone.storyboard in Resources */,
 				A1B913EC17CFF85B0008BB43 /* MainStoryboard_iPad.storyboard in Resources */,
+				B1F1649517DF8ACE0013EEBF /* useravatar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +305,9 @@
 				A1B913DC17CFF85B0008BB43 /* main.m in Sources */,
 				A1B913E017CFF85B0008BB43 /* SnapTrackCentralAppDelegate.m in Sources */,
 				A1B913EF17CFF85B0008BB43 /* SnapTrackCentralViewController.m in Sources */,
+				B1F1649D17E0D1780013EEBF /* Employee.m in Sources */,
+				B1F164A017E0D9660013EEBF /* ModalViewController.m in Sources */,
+				B1F164A317E0EE2B0013EEBF /* EmployeeCollection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +498,7 @@
 				A1B9140917CFF85B0008BB43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A1B9140A17CFF85B0008BB43 /* Build configuration list for PBXNativeTarget "SnapTrackCentralTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +507,7 @@
 				A1B9140C17CFF85B0008BB43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

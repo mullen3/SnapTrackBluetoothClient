@@ -198,6 +198,7 @@
     Employee *employee = [[Employee alloc] init];
     employee.name = stringFromData;
     [employee checkIn];
+
     
     [self.employeeCollection addEmployee:employee];
     [self.employeeTableView reloadData];    
@@ -206,6 +207,7 @@
     [self showModalWithString:[NSString stringWithFormat:@"Hi %@", employee.name]];
     //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     //[alert show];
+    [self playSound];
 }
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
@@ -238,7 +240,7 @@
     [self presentViewController:modalViewController animated:NO completion:NULL];
 
     modalViewController.label.text = modalText;
-    modalViewController.view.superview.bounds = CGRectMake(0, 0, 320, 320);
+    modalViewController.view.superview.bounds = CGRectMake(0, 0, 500, 500);
 }
 
 - (void)hideModal {
@@ -282,6 +284,12 @@
 #pragma mark
 // all of the tableview stuff down here
 
+- (void) playSound {
+    //NSString *soundPath [[NSBundle mainBundle] pathForResource:@"changeTrack" ofType:@"aif"];
+    //SystemSoundID soundID;
+    // hardcoded sound integer taken from http://iphonedevwiki.net/index.php/AudioServices
+    AudioServicesPlaySystemSound(1328);
+}
 
 
 - (IBAction)tappedOnView:(id)sender {
