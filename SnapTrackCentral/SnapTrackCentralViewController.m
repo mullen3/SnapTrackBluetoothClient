@@ -61,6 +61,7 @@
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
+    
     if (central.state != CBCentralManagerStatePoweredOn) {
         // In a real app, you'd deal with all the states correctly
         return;
@@ -202,7 +203,7 @@
     [self.employeeTableView reloadData];    
 
     _startTime = [[NSDate alloc] init];
-    [self showModalWithFormat:@"Hi %@"];
+    [self showModalWithString:[NSString stringWithFormat:@"Hi %@", employee.name]];
     //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     //[alert show];
 }
@@ -215,16 +216,17 @@
     //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ROFL" message:alertString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     //[alert show];
     if(self.isCheckedIn){
+        Employee *employee = [self.employeeCollection.activeEmployees objectAtIndex:0];
         self.isCheckedIn = NO;
-        [[self.employeeCollection.employees objectAtIndex:0] checkOut];
-        [self showModalWithFormat:@"Bye %@"];
-        
-        NSDate *endTime = [[NSDate alloc] init];
+        [employee checkOut];
+        [self.employeeTableView reloadData];
+        NSString *modalText = [NSString stringWithFormat:@"Bye %@. You worked %@ hours", [employee name], [employee hoursWorkedString]];
+        [self showModalWithString:modalText];
     }
     [self scan];
 }
 
-- (void)showModalWithFormat:(NSString *)formatString {
+- (void)showModalWithString:(NSString *)modalText {
     ModalViewController *modalViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"checkInModal"];
     [modalViewController setDelegate:self];
     
@@ -234,8 +236,8 @@
     }
        //[self presentModalViewController:modalViewController animated:NO];
     [self presentViewController:modalViewController animated:NO completion:NULL];
-    NSString *labelText = [NSString stringWithFormat:formatString, [[self.employeeCollection.employees objectAtIndex:0] name]];
-    modalViewController.label.text = labelText;
+
+    modalViewController.label.text = modalText;
     modalViewController.view.superview.bounds = CGRectMake(0, 0, 320, 320);
 }
 

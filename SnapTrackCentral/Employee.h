@@ -17,6 +17,17 @@
 
 - (void)checkIn;
 - (void)checkOut;
+- (NSString *)timeInString;
+- (NSString *)timeOutString;
+- (NSString *)hoursWorkedString;
 - (BOOL)isEqual:(id)object;
+
+@end
+
+
+@protocol EmployeeDelegate <NSObject>
+
+- (void)employeeDidCheckIn:(Employee *)employee;
+- (void)employeeDidCheckOut:(Employee *)employee;
 
 @end

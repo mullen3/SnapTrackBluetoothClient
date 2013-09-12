@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Employee.h"
 
-@interface EmployeeCollection : NSObject <UITableViewDataSource>
+@interface EmployeeCollection : NSObject <UITableViewDataSource, EmployeeDelegate>
 
-@property (strong, nonatomic) NSMutableArray *employees;
+@property (strong, nonatomic) NSMutableArray *activeEmployees;
+@property (strong, nonatomic) NSMutableArray *unactiveEmployees;
 
 - (void)addEmployee:(Employee *)employee;
-
 
 @end
