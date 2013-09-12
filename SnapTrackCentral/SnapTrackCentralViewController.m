@@ -285,8 +285,6 @@
 // all of the tableview stuff down here
 
 - (void) playSound {
-    //NSString *soundPath [[NSBundle mainBundle] pathForResource:@"changeTrack" ofType:@"aif"];
-    //SystemSoundID soundID;
     // hardcoded sound integer taken from http://iphonedevwiki.net/index.php/AudioServices
     AudioServicesPlaySystemSound(1328);
 }
