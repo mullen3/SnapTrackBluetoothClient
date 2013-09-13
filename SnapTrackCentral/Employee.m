@@ -8,6 +8,8 @@
 
 #import "Employee.h"
 
+#define SNAPTRACK_ENDPOINT_URL @"FOO"
+
 @implementation Employee
 
 - (id)init{
@@ -67,5 +69,31 @@
     }
     return dateString;
 }
+
+- (void)post {
+    NSString *post = [NSString stringWithFormat:@"Put information here"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:SNAPTRACK_ENDPOINT_URL]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    
+    if(connection) {
+        NSLog(@"Succesful connection");
+    }
+    else {
+        NSLog(@"Connection failed");
+    }
+}
+
+// add delegate methods to handle data?
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Employee : NSObject
+@interface Employee : NSObject <NSURLConnectionDelegate>
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *imagePath;
