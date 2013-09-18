@@ -13,7 +13,8 @@
 
 #define CHARACTERISTIC_NAME_UUID_STRING @"C54C3B19-64AC-423A-8282-09BA48CDB28C"
 #define SNAPTRACK_SERVICE_UUID_STRING @"7D12"
-
+#define NAMES_ARRAY @[@"Jane Doe", @"Sam Smith", @"Frank Stevens", @"Sarah Cole"]
+#define PICTURES_ARRAY @[@"lady1.png", @"man2.png", @"man3.png", @"lady2.png"]
 
 @interface SnapTrackCentralViewController () <CBCentralManagerDelegate,CBPeripheralDelegate, UITableViewDelegate, ModalViewControllerDelegate>
 
@@ -44,6 +45,16 @@
     self.isCheckedIn = NO;
     _data = [[NSMutableData alloc] init];
     self.employeeTableView.dataSource = self.employeeCollection;
+    
+    for (int i = 0; i < [NAMES_ARRAY count]; i++)
+    {
+        Employee *employee = [[Employee alloc] init];
+        employee.name = NAMES_ARRAY[i];
+        employee.imagePath = PICTURES_ARRAY[i];
+        [self.employeeCollection.unactiveEmployees addObject:employee];
+    }
+    // garbage for testing
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +68,7 @@
     [self.centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:SNAPTRACK_SERVICE_UUID_STRING]]
                                                 options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @YES }];
     NSLog(@"Scanning started");
+    
 }
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
@@ -71,7 +83,6 @@
     
     // ... so start scanning
     [self scan];
-    
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
@@ -197,10 +208,10 @@
     self.isCheckedIn = YES;
     Employee *employee = [[Employee alloc] init];
     employee.name = stringFromData;
+    employee.delegate = self.employeeCollection;
     [employee checkIn];
 
     
-    [self.employeeCollection addEmployee:employee];
     [self.employeeTableView reloadData];    
 
     _startTime = [[NSDate alloc] init];
@@ -233,7 +244,7 @@
     [modalViewController setDelegate:self];
     
     // check whether the viewController is already being presented dismiss if so
-    if ([modalViewController isEqual:self.presentedViewController]) {
+    if ([self.presentedViewController isKindOfClass:[ModalViewController class]]) {
         [self dismissViewControllerAnimated:NO completion:NULL];
     }
        //[self presentModalViewController:modalViewController animated:NO];

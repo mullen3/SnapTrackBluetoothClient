@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol EmployeeDelegate;
+
 @interface Employee : NSObject <NSURLConnectionDelegate>
 
+@property (nonatomic, assign) id<EmployeeDelegate> delegate;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *imagePath;
 @property (strong, nonatomic) NSDate *timeIn;
@@ -31,3 +34,4 @@
 - (void)employeeDidCheckOut:(Employee *)employee;
 
 @end
+

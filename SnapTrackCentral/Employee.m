@@ -8,7 +8,8 @@
 
 #import "Employee.h"
 
-#define SNAPTRACK_ENDPOINT_URL @"FOO"
+#define SNAPTRACK_ENDPOINT_URL @"http://snaptrack.intuit.com/api/mtalk/"
+#define JSON_TEMPLATE @"{\"destination\": { \"shortCode\": \"97068\"}, \"message\": [ {\"content\": { \"textContent\": \"%@\"}, \"messageDate\": \"2013-09-16\", \"keyword\": \"%@\" }], \"senderProfile\": { \"senderId\": \"8478946423\"}}"
 
 @implementation Employee
 
@@ -23,10 +24,18 @@
 
 - (void)checkIn {
     self.timeIn = [NSDate date];
+    if (self.timeIn) {
+        [self.delegate employeeDidCheckIn:self];
+    }
+    [self post:[NSString stringWithFormat:JSON_TEMPLATE, @"In", @"In"]];
 }
 
 - (void)checkOut {
     self.timeOut = [NSDate date];
+    if (self.timeOut) {
+        [self.delegate employeeDidCheckOut:self];
+    }
+    [self post:[NSString stringWithFormat:JSON_TEMPLATE, @"Out", @"Out"]];
 }
 
 - (NSString *)timeInString {
@@ -70,8 +79,9 @@
     return dateString;
 }
 
-- (void)post {
-    NSString *post = [NSString stringWithFormat:@"Put information here"];
+- (void)post:(NSString *)requestJSON {
+    NSString *post = requestJSON;
+    NSLog(@"%@", requestJSON);
     
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
@@ -79,19 +89,17 @@
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:SNAPTRACK_ENDPOINT_URL]];
+    NSLog(@"%@", [request.URL absoluteString]);
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
     
-    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-    
-    if(connection) {
-        NSLog(@"Succesful connection");
-    }
-    else {
-        NSLog(@"Connection failed");
-    }
+        
+    NSURLResponse *response;
+    NSError *err;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+    NSLog(@"responseData: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
 }
 
 // add delegate methods to handle data?

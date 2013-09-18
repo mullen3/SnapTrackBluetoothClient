@@ -17,6 +17,7 @@
     self = [super init];
     if (self) {
         self.activeEmployees = [[NSMutableArray alloc] init];
+        self.unactiveEmployees = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -31,18 +32,35 @@
 #pragma mark - TableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.activeEmployees count];
+    if (section == 0) {
+        return [self.activeEmployees count];
+    }
+    else {
+        return [self.unactiveEmployees count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Employee *employee = [self.activeEmployees objectAtIndex:indexPath.row];
     // add error checking here for employee object?
     
     UITableViewCell *employeeCell = [tableView dequeueReusableCellWithIdentifier:EMPLOYEE_CELL_IDENTIFIER];
     
     if (employeeCell == nil) {
         employeeCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:EMPLOYEE_CELL_IDENTIFIER];
+    }
+    
+    Employee *employee;
+    if (indexPath.section == 0) {
+        employee = [self.activeEmployees objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 1) {
+        employee = [self.unactiveEmployees objectAtIndex:indexPath.row];
+        // change background color
+        UIView *backgroundView = [[UIView alloc] init];
+        backgroundView.backgroundColor = [UIColor grayColor];
+        backgroundView.alpha = 0.3f;
+        employeeCell.backgroundView = backgroundView;
     }
     
     UIImage *employeePhoto = [UIImage imageNamed:employee.imagePath];
@@ -61,18 +79,49 @@
     return employeeCell;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Active Employees";
+    if (section == 0) {
+        return @"Active Employees";
+    }
+    else {
+        return @"Inactive Employees";
+    }
 }
 
 - (void)employeeDidCheckIn:(Employee *)employee {
+    if (!employee) return;
     
+    // first check if employee is in unactive employees
+    if ([self.unactiveEmployees containsObject:employee]){
+        // remove from unactive employees then
+        [self.unactiveEmployees removeObject:employee];
+    }
+    
+    // if not in active employees, add it
+    if (![self.activeEmployees containsObject:employee]){
+        [self.activeEmployees addObject:employee];
+    }
 }
 
 - (void)employeeDidCheckOut:(Employee *)employee
 {
+    if (!employee) return;
     
+    // first check if employee is in active employees
+    if ([self.activeEmployees containsObject:employee]){
+        // remove from unactive employees then
+        [self.activeEmployees removeObject:employee];
+    }
+    
+    // if not in unactive employees, add it
+    if (![self.unactiveEmployees containsObject:employee]){
+        [self.unactiveEmployees addObject:employee];
+    }
 }
 
 @end

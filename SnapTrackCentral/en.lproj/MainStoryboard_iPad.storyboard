@@ -68,14 +68,14 @@
                                             <constraint firstAttribute="bottom" secondItem="k9O-2m-hWt" secondAttribute="bottom" constant="28" id="6Va-bK-Qr2"/>
                                             <constraint firstItem="yhl-z3-FCL" firstAttribute="leading" secondItem="YyB-3d-nhh" secondAttribute="leading" constant="31" id="Cv6-ab-MAD"/>
                                             <constraint firstItem="Ksm-ab-Hq7" firstAttribute="leading" secondItem="YyB-3d-nhh" secondAttribute="leading" constant="120" id="D02-26-4s2"/>
-                                            <constraint firstItem="M5z-Fz-ZiR" firstAttribute="leading" secondItem="YyB-3d-nhh" secondAttribute="leading" constant="289" id="DOc-pT-j2c"/>
                                             <constraint firstItem="glZ-lD-JcM" firstAttribute="leading" secondItem="W9w-M1-Czz" secondAttribute="leading" type="default" id="Mae-j0-H10"/>
+                                            <constraint firstAttribute="trailing" secondItem="glZ-lD-JcM" secondAttribute="trailing" constant="173" id="T6F-LM-GAs"/>
                                             <constraint firstItem="k9O-2m-hWt" firstAttribute="leading" secondItem="M5z-Fz-ZiR" secondAttribute="leading" type="default" id="UTe-k9-Rz6"/>
+                                            <constraint firstAttribute="trailing" secondItem="M5z-Fz-ZiR" secondAttribute="trailing" constant="221" id="YOL-Go-Fmj"/>
                                             <constraint firstItem="Ksm-ab-Hq7" firstAttribute="top" secondItem="YyB-3d-nhh" secondAttribute="top" constant="44" id="bgK-l0-E1o"/>
                                             <constraint firstItem="glZ-lD-JcM" firstAttribute="baseline" secondItem="M5z-Fz-ZiR" secondAttribute="baseline" type="default" id="cFv-fN-AGq"/>
                                             <constraint firstItem="yhl-z3-FCL" firstAttribute="centerY" secondItem="YyB-3d-nhh" secondAttribute="centerY" type="default" id="iJW-V9-mWa"/>
                                             <constraint firstItem="k9O-2m-hWt" firstAttribute="trailing" secondItem="M5z-Fz-ZiR" secondAttribute="trailing" type="default" id="sGV-9O-ZLv"/>
-                                            <constraint firstItem="glZ-lD-JcM" firstAttribute="leading" secondItem="YyB-3d-nhh" secondAttribute="leading" constant="373" id="tI1-aw-vJe"/>
                                             <constraint firstItem="W9w-M1-Czz" firstAttribute="baseline" secondItem="k9O-2m-hWt" secondAttribute="baseline" type="default" id="zqe-Xm-ZVN"/>
                                         </constraints>
                                     </tableViewCell>
@@ -126,10 +126,10 @@
                                     <constraint firstAttribute="width" constant="188" id="qZi-eh-Kpp"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="185" translatesAutoresizingMaskIntoConstraints="NO" id="S0t-zT-bIg">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="330" translatesAutoresizingMaskIntoConstraints="NO" id="S0t-zT-bIg">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="185" id="CWm-Eh-tsD"/>
-                                    <constraint firstAttribute="height" constant="56" id="j5J-i1-rBP"/>
+                                    <constraint firstAttribute="height" constant="100" id="1Kw-rt-WaS"/>
+                                    <constraint firstAttribute="width" constant="330" id="xFG-rk-S66"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -155,11 +155,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="S0t-zT-bIg" secondAttribute="bottom" constant="192" id="6hg-WW-iWn"/>
-                            <constraint firstItem="kN0-jF-Pkn" firstAttribute="centerX" secondItem="S0t-zT-bIg" secondAttribute="centerX" type="default" id="Im3-hO-Szc"/>
+                            <constraint firstItem="gHo-Ib-gch" firstAttribute="centerX" secondItem="aPu-eZ-Kcx" secondAttribute="centerX" type="default" id="0RS-Yo-Onf"/>
+                            <constraint firstItem="S0t-zT-bIg" firstAttribute="top" secondItem="aPu-eZ-Kcx" secondAttribute="top" constant="242" id="7ha-qh-66j"/>
+                            <constraint firstItem="kN0-jF-Pkn" firstAttribute="leading" secondItem="aPu-eZ-Kcx" secondAttribute="leading" constant="157" id="Cbq-7Q-ewM"/>
+                            <constraint firstItem="S0t-zT-bIg" firstAttribute="centerX" secondItem="gHo-Ib-gch" secondAttribute="centerX" type="default" id="Fwt-ys-hyx"/>
                             <constraint firstItem="kN0-jF-Pkn" firstAttribute="top" secondItem="aPu-eZ-Kcx" secondAttribute="top" constant="39" id="OUT-oc-Xij"/>
-                            <constraint firstItem="gHo-Ib-gch" firstAttribute="centerX" secondItem="S0t-zT-bIg" secondAttribute="centerX" type="default" id="a42-Z7-83j"/>
-                            <constraint firstItem="S0t-zT-bIg" firstAttribute="centerX" secondItem="aPu-eZ-Kcx" secondAttribute="centerX" type="default" id="sNA-mr-2S2"/>
                             <constraint firstAttribute="bottom" secondItem="gHo-Ib-gch" secondAttribute="bottom" constant="68" id="vPe-1n-lx9"/>
                         </constraints>
                     </view>
